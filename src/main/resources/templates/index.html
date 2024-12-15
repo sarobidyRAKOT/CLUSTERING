@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>CLUSTER</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <form th:action="@{/login}" th:object="${form}" method="post">
+            <div>
+                <label for="nom">Nom :</label>
+                <input type="text" th:field="*{nom}" id="nom" placeholder="Entrez votre nom"/>
+            </div>
+            <div>
+                <button type="submit">Envoyer</button>
+            </div>
+        </form>
+
+        <script src="" async defer></script>
+    </body>
+</html>
