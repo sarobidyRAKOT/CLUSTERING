@@ -3,25 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>CLUSTER</title>
+        <title>CLUSTERING</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <link rel="icon" th:href="@{/images/logo.png}" type="image/x-icon"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
     <body>
-        <form th:action="@{/login}" th:object="${form}" method="post">
-            <div>
-                <label for="nom">Nom :</label>
-                <input type="text" th:field="*{nom}" id="nom" placeholder="Entrez votre nom"/>
-            </div>
-            <div>
-                <label for="mdp">mdp :</label>
-                <input type="password" th:field="*{mdp}" id="mdp" placeholder="Entrez votre mdp"/>
-            </div>
-            <div>
-                <button type="submit">Se Connecter</button>
-            </div>
-        </form>
-
+        <div th:insert="~{${contenu}}"></div>
+        <div th:insert="~{elements/js :: js-path}"></div>
     </body>
 </html>

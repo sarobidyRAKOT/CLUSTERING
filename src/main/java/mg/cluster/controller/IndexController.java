@@ -1,22 +1,17 @@
 package mg.cluster.controller;
 
 
-
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import mg.cluster.model.Utilisateur;
 import mg.cluster.repository.UtilisateurRepository;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class IndexController {
@@ -28,25 +23,51 @@ public class IndexController {
 
 
     @GetMapping("/")
-    public String homePage(Model model) {
-        model.addAttribute("form", new Utilisateur());
-        return "index"; // Correspond au fichier index.html dans /templates
+    public ModelAndView homePage() {
+        ModelAndView mv = new ModelAndView("index");
+        mv.addObject("Utilisateur", new Utilisateur());
+        mv.addObject("contenu", "pages/login"); // Chemin correct
+        return mv;
     }
 
 
-    @PostMapping("/login")
-    public String submitForm(@ModelAttribute Utilisateur u, HttpSession session, Model model) {
 
-        Utilisateur user = utilisateurRepository.findByNomAndMdp(u.getNom(), u.getMdp());
+    @PostMapping("/login")
+    public String login (@ModelAttribute Utilisateur u, HttpSession session, Model model) {
+
+
+        Utilisateur user = utilisateurRepository.findByMailAndMotpasse(u.getMail(), u.getMotpasse());
 
         if (user != null) {
-            session.setAttribute("nom", user.getNom());
-            // System.out.println(session.getAttribute("nom"));
+            session.setAttribute("user", user);
 
-            model.addAttribute("nom", session.getAttribute("nom"));
-            return "pages/loginSuccess";            
+            model.addAttribute("User", (Utilisateur) session.getAttribute("user"));
+            System.out.println("MISY");
+            model.addAttribute("contenu", "pages/loginSuccess");      
+            return "index";
         } else {
             return "redirect:/";
+        }
+
+    }
+
+
+    @PostMapping("/incrire")
+    public String inscription (@ModelAttribute Utilisateur u, HttpSession session, Model model) {
+
+
+        Utilisateur user = utilisateurRepository.findByNomAndMail(u.getNom(), u.getMail());
+
+        if (user != null) {
+            // System.out.println("MISY");
+            return "redirect:/";
+        } else {
+            user = (Utilisateur) utilisateurRepository.save(u);
+            session.setAttribute("user", user);
+            
+            model.addAttribute("User", (Utilisateur) session.getAttribute("user"));
+            model.addAttribute("contenu", "pages/loginSuccess");      
+            return "index";
         }
 
     }

@@ -1,32 +1,4 @@
-<!--
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Login Success</title>
-    </head>
-    <body>
-        <h1>Formulaire soumis avec succès !</h1>
-        <p>Nom soumis : <span th:text="${submittedNom}"></span></p>
-    </body>
-</html>
--->
-
-
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>CLUSTER</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-
-        <h1>Formulaire soumis avec succès !</h1>
-        <p>Nom soumis : <span th:text="${nom}"></span></p>
-
-    </body>
-</html>
+<div th:fragment="success-login"> 
+    <h1 th:text="'Bonjour, '+${User.nom}">
+    </h1>
+</div>
